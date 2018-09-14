@@ -23,7 +23,7 @@ class Floor(MapObject, Shape2D):
     def flat_list(self):
         return list(lambda x: isinstance(x, Flat), Shape2D.nested_shape_list)
 
-    def append_building(self, flat):
+    def append_flat(self, flat):
         Shape2D.append_shape(self, flat)
 
 
