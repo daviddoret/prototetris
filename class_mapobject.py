@@ -1,3 +1,4 @@
+import jsonpickle
 
 """MapObject class.
 
@@ -12,4 +13,6 @@ class MapObject(object):
         self.label = label
         self.description = description
 
+    def __repr__(self):
+        return jsonpickle.encode(self)
 

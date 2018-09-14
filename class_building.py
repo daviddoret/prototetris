@@ -1,6 +1,7 @@
 from class_floor import Floor
 from class_shape2d import Shape2D
 from class_mapobject import MapObject
+import jsonpickle
 
 """Building class
 """
@@ -13,6 +14,9 @@ class Building(MapObject, Shape2D):
         MapObject.__init__(self, label, description, *args, **kwargs)
         Shape2D.__init__(self, *args, **kwargs)
         self.height = height
+
+    def __repr__(self):
+        return jsonpickle.encode(self)
 
     @property
     def floor_list(self):

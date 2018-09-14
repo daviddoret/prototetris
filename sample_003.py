@@ -1,15 +1,12 @@
 from class_shape2d import Shape2D
-from class_ground import Ground
-from class_building import Building
-from class_floor import Floor
+from sympy import Polygon
 
-g1 = Ground()
 
-b1 = Building()
-g1.append_building(b1)
+s1 = Shape2D()
+s1.shape = Polygon((0, 0), (100, 0), (100, 80), (0, 80))
+print(s1)
 
-f1 = Floor()
-b1.append_floor(f1)
+s2 = Shape2D()
+s2.shape = Polygon((0, 0), (25, 0), (25, 50), (0, 50))
+print(s2)
 
-f2 = Floor()
-b1.append_floor(f2)

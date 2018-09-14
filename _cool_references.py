@@ -59,4 +59,10 @@ CONSIDER
 http://www.open3d.org/
 
 
+PYCOLLADA
+
+a possible option to export results in 3d format
+https://media.readthedocs.org/pdf/pycollada/latest/pycollada.pdf
+
+
 """

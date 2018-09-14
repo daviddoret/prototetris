@@ -1,5 +1,5 @@
-from sympy import Polygon
-
+from sympy import Point
+import jsonpickle
 
 """Shape2D Class
 
@@ -12,22 +12,31 @@ May contain children nested shapes.
 
 class Shape2D(object):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, circumscribed_shape=None, position=None, *args, **kwargs):
         print("Shape2d constructor")
-        self.container_shape = None
+        self.circumscribed_shape = circumscribed_shape
         self.shape = None
-        self.nested_shape_list = []
+        self.inscribed_shape_list = []
+        self.position = position
+
+    def __repr__(self):
+        return jsonpickle.encode(self)
 
     # We will add here methods to translate, rotate, resize, split segments, move polygon points, etc.
     # The wrapper class will be useful to apply constraints on the shape,
     # ie if a shape is contained within a shape container, it can't move out of the container,
     # and if collisions are not allowed with sibling shapes, then they are not allowed.
 
-    def append_shape(self, shape):
+    def append_shape(self, shape, position=None):
         """It is mandatory to use this method to append shapes on parent shapes,
         to guarantee proper referential integrity between parents and children.
         :param shape:
+        :param position:
         :return:
         """
+        if position is None:
+            position = Point(0, 0)
         shape.container_shape = self
-        self.nested_shape_list.append(shape)
+        shape.position = position
+        self.inscribed_shape_list.append(shape)
+
