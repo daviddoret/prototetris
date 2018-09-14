@@ -1,38 +1,46 @@
 from class_floor import Floor
+from class_shape2d import Shape2D
+from class_mapobject import MapObject
 
-"""building class
-
-blablabla
-blablabla
-blablabal
+"""Building class
 """
 
 
-class Building:
+class Building(MapObject, Shape2D):
 
-    def __init__(self, name="some building", height=120):
-        self.name = name
+    def __init__(self, label="A building", description="", height=None, *args, **kwargs):
+        print("Building constructor")
+        MapObject.__init__(self, label, description, *args, **kwargs)
+        Shape2D.__init__(self, *args, **kwargs)
         self.height = height
-        self.floor_list = []
 
-    """generate n additional floors in the building,
-    providing there is still some available space"""
+    @property
+    def floor_list(self):
+        return list(lambda x: isinstance(x, Floor), Shape2D.nested_shape_list)
+
+    def append_floor(self, floor):
+        Shape2D.append_shape(self, floor)
+
     def generate_floor(self, floor_number):
-        if self.get_floor_height_total() == 0:
+        """generate n additional floors in the building,
+        providing there is still some available space"""
+        if self.floor_height_total() == 0:
             raise ValueError("impossible to generate more floors because there is no space left")
-        floor_height = self.get_free_height_total() / floor_number
+        floor_height = self.free_height_total() / floor_number
         for i in range(floor_number):
             f = Floor()
             f.height = floor_height
-            self.floor_list.append(f)
+            self.append_floor(f)
 
-    """computes the total height of the building floors"""
-    def get_floor_height_total(self):
+    @property
+    def floor_height_total(self):
+        """computes the total height of the building floors"""
         h = 0
         for f in self.floor_list:
             h += f.height
         return h
 
-    """computes the available free height"""
-    def get_free_height_total(self):
-        return self.height - self.get_floor_height_total()
+    @property
+    def free_height_total(self):
+        """computes the available free height"""
+        return self.height - self.floor_height_total()
