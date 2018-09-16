@@ -64,5 +64,8 @@ PYCOLLADA
 a possible option to export results in 3d format
 https://media.readthedocs.org/pdf/pycollada/latest/pycollada.pdf
 
+SOME SCIENTIFIC PYTHON LIB BINARIES, INCL. CGKIT AND POLYGON
+
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#polygon
 
 """

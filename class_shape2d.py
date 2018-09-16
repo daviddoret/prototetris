@@ -1,4 +1,6 @@
-from sympy import Point
+import vtk
+from vtk.util.colors import tomato # The colors module defines various useful colors.
+from sympy import Point, Polygon
 import jsonpickle
 
 """Shape2D Class
@@ -40,3 +42,52 @@ class Shape2D(object):
         shape.position = position
         self.inscribed_shape_list.append(shape)
 
+    def to_vtk(self):
+        # Setup four points
+        points = vtk.vtkPoints()
+        points_number = 0
+        for p in self.shape.vertices:
+            points_number += 1
+            x = float(p.x)
+            y = float(p.y)
+            z = float(0)
+            print("p({},{},{})".format(x, y, z))
+            points.insertNextPoint(x, y, z)
+
+        # Create the polygon
+        polygon = vtk.vtkPolygon()
+        polygon.GetPointIds().SetNumberOfIds(points_number)  # make a quad
+        for i in range(0, points_number - 1):
+            polygon.GetPointIds().SetId(i, i)
+
+        # Add the polygon to a list of polygons
+        polygons = vtk.vtkCellArray()
+        polygons.InsertNextCell(polygon)
+
+        # Create a PolyData
+        polygonPolyData = vtk.vtkPolyData()
+        polygonPolyData.SetPoints(points)
+        polygonPolyData.SetPolys(polygons)
+
+        # Create a mapper and actor
+        mapper = vtk.vtkPolyDataMapper()
+        if vtk.VTK_MAJOR_VERSION <= 5:
+            mapper.SetInput(polygonPolyData)
+        else:
+            mapper.SetInputData(polygonPolyData)
+
+        actor = vtk.vtkActor()
+        actor.SetMapper(mapper)
+
+        # Visualize
+        renderer = vtk.vtkRenderer()
+        renderWindow = vtk.vtkRenderWindow()
+        renderWindow.AddRenderer(renderer)
+        renderWindowInteractor = vtk.vtkRenderWindowInteractor()
+        renderWindowInteractor.SetRenderWindow(renderWindow)
+
+        renderer.AddActor(actor)
+        renderer.SetBackground(.5, .3, .31)  # Background color salmon
+
+        renderWindow.Render()
+        renderWindowInteractor.Start()
