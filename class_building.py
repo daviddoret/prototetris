@@ -1,6 +1,7 @@
 from class_floor import Floor
 from class_shape2d import Shape2D
 from class_mapobject import MapObject
+from fun_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
 import jsonpickle
 
 """Building class
@@ -48,3 +49,6 @@ class Building(MapObject, Shape2D):
     def free_height_total(self):
         """computes the available free height"""
         return self.height - self.floor_height_total()
+
+    def to_vtk_polydata(self):
+        return sympy_polygon_to_vtk_polydata(self.shape, color=(100, 100, 100), altitude=10)

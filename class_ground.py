@@ -1,6 +1,7 @@
 from class_mapobject import MapObject
 from class_shape2d import Shape2D
 from class_building import Building
+from fun_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
 import jsonpickle
 
 """Ground class
@@ -26,4 +27,6 @@ class Ground(MapObject, Shape2D):
     def append_building(self, building, position):
         Shape2D.append_shape(self, building, position)
 
+    def to_vtk_polydata(self):
+        return sympy_polygon_to_vtk_polydata(self.shape, color=(50, 150, 50), altitude=5)
 

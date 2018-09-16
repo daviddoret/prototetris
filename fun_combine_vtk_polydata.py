@@ -21,7 +21,11 @@ def combine_vtk_polydata(*args):
     #    append_filter.AddInputData(vtk_polydata_2)
 
     for arg in args:
-        append_filter.AddInputData(arg)
+        if isinstance(arg, vtk.vtkPolyData):
+            append_filter.AddInputData(arg)
+        if isinstance(arg, list):
+            for i in arg:
+                append_filter.AddInputData(i)
 
     append_filter.Update()
 
