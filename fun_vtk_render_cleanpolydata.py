@@ -1,7 +1,7 @@
 import vtk
 
 
-def render_vtk_cleanpolydata(vtk_cleanpolydata):
+def vtk_render_cleanpolydata(vtk_cleanpolydata):
     """
     References:
     - https://www.vtk.org/Wiki/VTK/Examples/Python/Filtering/CombinePolyData

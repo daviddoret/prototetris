@@ -1,7 +1,7 @@
 import vtk
 
 
-def combine_vtk_polydata(*args):
+def vtk_combine_polydata(*args):
     """
     References:
     - https://www.vtk.org/Wiki/VTK/Examples/Python/Filtering/CombinePolyData

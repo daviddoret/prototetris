@@ -1,19 +1,19 @@
-from class_floor import Floor
-from class_shape2d import Shape2D
-from class_mapobject import MapObject
-from fun_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
+from class_ModelFloor import ModelFloor
+from class_ModelBaseShape import ModelBaseShape
+from class_ModelMapObject import ModelMapObject
+from fun_vtk_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
 import jsonpickle
 
-"""Building class
+"""ModelBuilding class
 """
 
 
-class Building(MapObject, Shape2D):
+class ModelBuilding(ModelMapObject, ModelBaseShape):
 
     def __init__(self, label="A building", description="", height=None, *args, **kwargs):
-        print("Building constructor")
-        MapObject.__init__(self, label, description, *args, **kwargs)
-        Shape2D.__init__(self, *args, **kwargs)
+        print("ModelBuilding constructor")
+        ModelMapObject.__init__(self, label, description, *args, **kwargs)
+        ModelBaseShape.__init__(self, *args, **kwargs)
         self.height = height
 
     def __repr__(self):
@@ -21,10 +21,10 @@ class Building(MapObject, Shape2D):
 
     @property
     def floor_list(self):
-        return list(lambda x: isinstance(x, Floor), Shape2D.nested_shape_list)
+        return list(lambda x: isinstance(x, ModelFloor), ModelBaseShape.nested_shape_list)
 
     def append_floor(self, floor):
-        Shape2D.append_shape(self, floor)
+        ModelBaseShape.append_shape(self, floor)
 
     def generate_floor(self, floor_number):
         """generate n additional floors in the building,
@@ -33,7 +33,7 @@ class Building(MapObject, Shape2D):
             raise ValueError("impossible to generate more floors because there is no space left")
         floor_height = self.free_height_total() / floor_number
         for i in range(floor_number):
-            f = Floor()
+            f = ModelFloor()
             f.height = floor_height
             self.append_floor(f)
 

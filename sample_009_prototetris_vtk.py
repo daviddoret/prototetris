@@ -2,11 +2,11 @@
 
 import vtk
 from sympy import Polygon
-from class_ground import Ground
+from class_ModelGround import ModelGround
 
 
 s = Polygon((0, 0), (1, 0), (2, 1), (2, 2), (0, 1))
-g = Ground("My land")
+g = ModelGround("My land")
 
 # Setup four points
 points = vtk.vtkPoints()

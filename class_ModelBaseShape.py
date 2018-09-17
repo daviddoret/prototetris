@@ -1,7 +1,7 @@
 from sympy import Point, Polygon
 import jsonpickle
 
-"""Shape2D Class
+"""ModelBaseShape Class
 
 Base class to represent 2 dimensional shapes.
 Basically a wrapper class around sympy Polygon with glue code to make it architecturally friendly.
@@ -10,7 +10,7 @@ May contain children nested shapes.
 """
 
 
-class Shape2D(object):
+class ModelBaseShape(object):
 
     def __init__(self, circumscribed_shape=None, position=None, *args, **kwargs):
         print("Shape2d constructor")

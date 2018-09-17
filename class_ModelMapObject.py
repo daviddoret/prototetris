@@ -1,15 +1,15 @@
 import jsonpickle
 
-"""MapObject class.
+"""ModelMapObject class.
 
 Mainly for decoration purposes.
 """
 
 
-class MapObject(object):
+class ModelMapObject(object):
 
     def __init__(self, label="Object", description="", *args, **kwargs):
-        print("MapObject constructor")
+        print("ModelMapObject constructor")
         self.label = label
         self.description = description
 
