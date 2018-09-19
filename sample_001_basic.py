@@ -1,4 +1,4 @@
-from class_ModelBaseShape import ModelBaseShape
+from class_ModelIrregularRightPrism import ModelIrregularRightPrism
 from class_ModelGround import ModelGround
 from class_ModelBuilding import ModelBuilding
 from class_ModelFloor import ModelFloor

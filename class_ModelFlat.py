@@ -1,17 +1,15 @@
-from class_ModelBaseShape import ModelBaseShape
-from class_ModelMapObject import ModelMapObject
+from class_ModelIrregularRightPrism import ModelIrregularRightPrism
+from class_ModelAbstractShape import ModelAbstractShape
 import jsonpickle
 
 """ModelFlat class
 """
 
 
-class ModelFlat(ModelMapObject, ModelBaseShape):
+class ModelFlat(ModelIrregularRightPrism):
 
     def __init__(self, label="A flat", description="", *args, **kwargs):
-        print("ModelFlat constructor")
-        ModelMapObject.__init__(self, label, description, *args, **kwargs)
-        ModelBaseShape.__init__(self, *args, **kwargs)
+        ModelIrregularRightPrism.__init__(self, label, description, *args, **kwargs)
 
     def __repr__(self):
         return jsonpickle.encode(self)

@@ -1,6 +1,6 @@
 from class_ModelFloor import ModelFloor
-from class_ModelBaseShape import ModelBaseShape
-from class_ModelMapObject import ModelMapObject
+from class_ModelIrregularRightPrism import ModelIrregularRightPrism
+from class_ModelAbstractShape import ModelAbstractShape
 from fun_vtk_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
 import jsonpickle
 
@@ -8,12 +8,10 @@ import jsonpickle
 """
 
 
-class ModelBuilding(ModelMapObject, ModelBaseShape):
+class ModelBuilding(ModelIrregularRightPrism):
 
     def __init__(self, label="A building", description="", height=None, *args, **kwargs):
-        print("ModelBuilding constructor")
-        ModelMapObject.__init__(self, label, description, *args, **kwargs)
-        ModelBaseShape.__init__(self, *args, **kwargs)
+        ModelIrregularRightPrism.__init__(self, label, description, *args, **kwargs)
         self.height = height
 
     def __repr__(self):
@@ -21,10 +19,10 @@ class ModelBuilding(ModelMapObject, ModelBaseShape):
 
     @property
     def floor_list(self):
-        return list(lambda x: isinstance(x, ModelFloor), ModelBaseShape.nested_shape_list)
+        return list(lambda x: isinstance(x, ModelFloor), ModelIrregularRightPrism.nested_shape_list)
 
     def append_floor(self, floor):
-        ModelBaseShape.append_shape(self, floor)
+        ModelIrregularRightPrism.append_shape(self, floor)
 
     def generate_floor(self, floor_number):
         """generate n additional floors in the building,
