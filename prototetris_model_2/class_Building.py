@@ -1,17 +1,16 @@
-from class_ModelFloor import ModelFloor
-from class_ModelIrregularRightPrism import ModelIrregularRightPrism
-from class_ModelAbstractShape import ModelAbstractShape
-from fun_vtk_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
+from prototetris_model_2.class_Floor import Floor
+from prototetris_model_2.class_IrregularRightPrism import IrregularRightPrism
+from prototetris_renderer_vtk.fun_vtk_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
 import jsonpickle
 
-"""ModelBuilding class
+"""Building class
 """
 
 
-class ModelBuilding(ModelIrregularRightPrism):
+class Building(IrregularRightPrism):
 
     def __init__(self, label="A building", description="", height=None, *args, **kwargs):
-        ModelIrregularRightPrism.__init__(self, label, description, *args, **kwargs)
+        IrregularRightPrism.__init__(self, label, description, *args, **kwargs)
         self.height = height
 
     def __repr__(self):
@@ -19,10 +18,10 @@ class ModelBuilding(ModelIrregularRightPrism):
 
     @property
     def floor_list(self):
-        return list(lambda x: isinstance(x, ModelFloor), ModelIrregularRightPrism.nested_shape_list)
+        return list(lambda x: isinstance(x, Floor), IrregularRightPrism.nested_shape_list)
 
     def append_floor(self, floor):
-        ModelIrregularRightPrism.append_shape(self, floor)
+        IrregularRightPrism.append_shape(self, floor)
 
     def generate_floor(self, floor_number):
         """generate n additional floors in the building,
@@ -31,7 +30,7 @@ class ModelBuilding(ModelIrregularRightPrism):
             raise ValueError("impossible to generate more floors because there is no space left")
         floor_height = self.free_height_total() / floor_number
         for i in range(floor_number):
-            f = ModelFloor()
+            f = Floor()
             f.height = floor_height
             self.append_floor(f)
 
@@ -49,4 +48,4 @@ class ModelBuilding(ModelIrregularRightPrism):
         return self.height - self.floor_height_total()
 
     def to_vtk_polydata(self):
-        return sympy_polygon_to_vtk_polydata(self.shape, color=(100, 100, 100), altitude=10)
+        return sympy_polygon_to_vtk_polydata(self.polygon_base, color=(100, 100, 100), altitude=10)

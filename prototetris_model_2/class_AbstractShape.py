@@ -1,13 +1,13 @@
 import jsonpickle
 
 
-class ModelAbstractShape(object):
-    """The abstract class representing an arbitrary shape in an architectural model.
+class Model2AbstractShape(object):
+    """The abstract class representing an arbitrary polygon_base in an architectural model.
 
     This class implement members that are universal to architectural model shapes,
-    without any assumption made on how the shape will "look like".
+    without any assumption made on how the polygon_base will "look like".
     Sub-classes inheriting from this class are expected to enrich this abstraction
-    with a parametric implementation of how the shape "looks like".
+    with a parametric implementation of how the polygon_base "looks like".
     This abstraction layer opens the door to future extensions
     with different shapes than the basic prisms we intend to implement first.
 
@@ -42,9 +42,9 @@ class ModelAbstractShape(object):
     def __repr__(self):
         return jsonpickle.encode(self)
 
-    # We will add here methods to translate, rotate, (and possibly resize?) the shape.
+    # We will add here methods to translate, rotate, (and possibly resize?) the polygon_base.
     # We should also implement constraints, such as:
-    # - an inscribed shape can't move out of its circumscribed shape.
+    # - an inscribed polygon_base can't move out of its circumscribed polygon_base.
     # - some shapes should not be allowed to collision (overlap).
 
     def append_shape(self, shape, position=None):

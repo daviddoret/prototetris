@@ -1,10 +1,8 @@
-from class_ModelAbstractShape import ModelAbstractShape
-from sympy import Point, Polygon
-import jsonpickle
+from prototetris_model_2.class_AbstractShape import Model2AbstractShape
 
 
-class ModelIrregularRightPrism(ModelAbstractShape):
-    """A parametric irregular right prism architectural shape
+class IrregularRightPrism(Model2AbstractShape):
+    """A parametric irregular right prism architectural polygon_base
 
     Prism: two polygons linked by segments
     Irregular: the base polygons of the prism are irregular polygons
@@ -13,8 +11,8 @@ class ModelIrregularRightPrism(ModelAbstractShape):
     """
 
     def __init__(self, label, description, circumscribed_shape=None, position=None, *args, **kwargs):
-        ModelAbstractShape.__init__(self, label, description, circumscribed_shape, position, *args, **kwargs)
-        self.shape = None
+        Model2AbstractShape.__init__(self, label, description, circumscribed_shape, position, *args, **kwargs)
+        self.polygon_base = None
 
     # We will implement here methods to manipulate the prism, e.g.:
     # - split segments,
