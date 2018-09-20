@@ -1,7 +1,7 @@
-from prototetris_model_2.class_AbstractShape import Model2AbstractShape
+from prototetris_model_2.class_AbstractShape import AbstractShape
 
 
-class IrregularRightPrism(Model2AbstractShape):
+class IrregularRightPrism(AbstractShape):
     """A parametric irregular right prism architectural polygon_base
 
     Prism: two polygons linked by segments
@@ -11,7 +11,7 @@ class IrregularRightPrism(Model2AbstractShape):
     """
 
     def __init__(self, label, description, circumscribed_shape=None, position=None, *args, **kwargs):
-        Model2AbstractShape.__init__(self, label, description, circumscribed_shape, position, *args, **kwargs)
+        AbstractShape.__init__(self, label, description, circumscribed_shape, position, *args, **kwargs)
         self.polygon_base = None
 
     # We will implement here methods to manipulate the prism, e.g.:

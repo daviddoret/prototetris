@@ -1,7 +1,7 @@
 import jsonpickle
 
 
-class Model2AbstractShape(object):
+class AbstractShape(object):
     """The abstract class representing an arbitrary polygon_base in an architectural model.
 
     This class implement members that are universal to architectural model shapes,

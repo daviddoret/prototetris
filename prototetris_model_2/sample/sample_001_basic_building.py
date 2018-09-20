@@ -1,9 +1,6 @@
 from sympy import Polygon
-from prototetris_model_2.class_Ground import Ground
-from prototetris_model_2.class_Building import Building
-from prototetris_model_2.class_Floor import Floor
-from prototetris_renderer_vtk.fun_vtk_combine_polydata import vtk_combine_polydata
-from prototetris_renderer_vtk.fun_vtk_render_cleanpolydata import vtk_render_cleanpolydata
+from prototetris_model_2 import *
+from prototetris_renderer_vtk import *
 
 
 g = Ground("My land")
@@ -23,7 +20,6 @@ p.append(b.to_vtk_polydata())
 p.append(fb.to_vtk_polydata())
 p.append(f1.to_vtk_polydata())
 p.append(f2.to_vtk_polydata())
-
 p_conso = vtk_combine_polydata(p)
 
 vtk_render_cleanpolydata(p_conso)
