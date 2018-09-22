@@ -1,11 +1,11 @@
-from prototetris_model_2.class_Ground import Ground
+from prototetris_model_2.class_Plan import Plan
 from prototetris_model_2.class_Building import Building
 from prototetris_model_2.class_Floor import Floor
 from sympy import Point, Polygon
 from prototetris_model_2.class_Flat import Flat
 
 # Create a ground surface
-a_cool_place = Ground()
+a_cool_place = Plan()
 a_cool_place.polygon_base = Polygon((0, 0), (100, 0), (100, 50), (0, 50))
 
 # Build a building

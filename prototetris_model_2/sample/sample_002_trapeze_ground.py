@@ -2,11 +2,11 @@
 
 import vtk
 from sympy import Polygon
-from prototetris_model_2.class_Ground import Ground
+from prototetris_model_2.class_Plan import Plan
 
 
 s = Polygon((0, 0), (1, 0), (2, 1), (2, 2), (0, 1))
-g = Ground("My land")
+g = Plan("My land")
 
 # Setup four points
 points = vtk.vtkPoints()

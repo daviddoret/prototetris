@@ -1,4 +1,5 @@
 from prototetris_model_2.class_AbstractShape import AbstractShape
+from sympy import *
 
 
 class IrregularRightPrism(AbstractShape):
@@ -10,9 +11,28 @@ class IrregularRightPrism(AbstractShape):
     Rationale: such prisms look like simple to manipulate yet very expressive.
     """
 
-    def __init__(self, label, description, circumscribed_shape=None, position=None, *args, **kwargs):
-        AbstractShape.__init__(self, label, description, circumscribed_shape, position, *args, **kwargs)
-        self.polygon_base = None
+    def __init__(
+            self,
+            label="Prism",
+            description=None,
+            circumscribed_shape=None,
+            position=Point3D(0, 0, 0),
+            surface_color=None,
+            polygon_base=Polygon((0, 0), (5, 0), (5, 5), (0, 5), (0, 0)),
+            height=None,
+            *args,
+            **kwargs):
+        AbstractShape.__init__(
+            self,
+            label=label,
+            description=description,
+            circumscribed_shape=circumscribed_shape,
+            position=position,
+            surface_color=surface_color,
+            *args,
+            **kwargs)
+        self.polygon_base = polygon_base
+        self.height = height
 
     # We will implement here methods to manipulate the prism, e.g.:
     # - split segments,

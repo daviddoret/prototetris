@@ -1,7 +1,7 @@
 from prototetris_model_2.class_Floor import Floor
 from prototetris_model_2.class_IrregularRightPrism import IrregularRightPrism
-from prototetris_renderer_vtk.fun_vtk_sympy_polygon_to_vtk_polydata import sympy_polygon_to_vtk_polydata
-import jsonpickle
+from colorutils import *
+from sympy import *
 
 """Building class
 """
@@ -9,12 +9,27 @@ import jsonpickle
 
 class Building(IrregularRightPrism):
 
-    def __init__(self, label="A building", description="", height=None, *args, **kwargs):
-        IrregularRightPrism.__init__(self, label, description, *args, **kwargs)
-        self.height = height
-
-    def __repr__(self):
-        return jsonpickle.encode(self)
+    def __init__(
+            self,
+            label="Building",
+            description=None,
+            circumscribed_shape=None,
+            position=Point3D(0, 0, 0),
+            polygon_base=Polygon((0, 0), (50, 0), (50, 50), (0, 50), (0, 0)),
+            height=100,
+            *args,
+            **kwargs):
+        IrregularRightPrism.__init__(
+            self,
+            label=label,
+            description=description,
+            circumscribed_shape=circumscribed_shape,
+            position=position,
+            surface_color=colorutils.Color((100, 100, 100)),
+            polygon_base=polygon_base,
+            height=height,
+            *args,
+            **kwargs)
 
     @property
     def floor_list(self):
@@ -30,7 +45,10 @@ class Building(IrregularRightPrism):
             raise ValueError("impossible to generate more floors because there is no space left")
         floor_height = self.free_height_total() / floor_number
         for i in range(floor_number):
-            f = Floor()
+            f = Floor(
+                label="f" + i,
+                position=Point3D(0, 0, i * floor_height)
+            )
             f.height = floor_height
             self.append_floor(f)
 
@@ -46,6 +64,3 @@ class Building(IrregularRightPrism):
     def free_height_total(self):
         """computes the available free height"""
         return self.height - self.floor_height_total()
-
-    def to_vtk_polydata(self):
-        return sympy_polygon_to_vtk_polydata(self.polygon_base, color=(100, 100, 100), altitude=10)
