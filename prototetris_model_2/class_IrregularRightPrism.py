@@ -1,5 +1,7 @@
 from prototetris_model_2.class_AbstractShape import AbstractShape
+from .fun_polygon_to_irregular_right_prism import polygon_to_irregular_right_prism
 from sympy import *
+from colorutils import *
 
 
 class IrregularRightPrism(AbstractShape):
@@ -13,13 +15,13 @@ class IrregularRightPrism(AbstractShape):
 
     def __init__(
             self,
-            label="Prism",
+            label="Irregular Right Prism",
             description=None,
             circumscribed_shape=None,
             position=Point3D(0, 0, 0),
-            surface_color=None,
+            surface_color=Color((200, 200, 200)),
             polygon_base=Polygon((0, 0), (5, 0), (5, 5), (0, 5), (0, 0)),
-            height=None,
+            height=3,
             *args,
             **kwargs):
         AbstractShape.__init__(
@@ -41,3 +43,13 @@ class IrregularRightPrism(AbstractShape):
     # etc.
     # We will also implement constraints, such as:
     # - polygon segments may not cross each other.
+
+    def get_polygons3d(self):
+        """
+        Returns the list of 3d polygons
+        that represent the prism surfaces.
+        """
+        return polygon_to_irregular_right_prism(self.polygon_base, self.height)
+
+
+

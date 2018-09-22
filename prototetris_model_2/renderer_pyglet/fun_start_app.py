@@ -1,51 +1,24 @@
-import vtk
-from sympy import Polygon
 from prototetris_model_2 import *
 from colorutils import *
+from sympy import *
+import pyglet
 
-
-def irregular_right_prism_to_vtk_polydata(prism):
+def start_app():
     """References:
-    - https://cmake.org/Wiki/VTK/Examples/Python/GeometricObjects/Display/Polygon
+    - https://pyglet.readthedocs.io/en/pyglet-1.3-maintenance/programming_guide/quickstart.html#hello-world
     """
 
-    sympy_polygon = prism.polygon_base
-    surface_color = prism.surface_color
-    base_p = prism.position
+    window = pyglet.window.Window()
 
-    vtk_polydata = vtk.vtkPolyData()
+    label = pyglet.text.Label('Hello, world',
+                              font_name='Times New Roman',
+                              font_size=36,
+                              x=window.width // 2, y=window.height // 2,
+                              anchor_x='center', anchor_y='center')
 
-    # Setup four points
-    points = vtk.vtkPoints()
-    points_number = 0
-    for p in sympy_polygon.vertices:
-        points_number = points_number + 1
-        x = float(p.x)
-        y = float(p.y)
-        z = float(base_p.z)
-        points.InsertNextPoint(x, y, z)
+    @window.event
+    def on_draw():
+        window.clear()
+        label.draw()
 
-    # Create the polygon
-    polygon = vtk.vtkPolygon()
-    polygon.GetPointIds().SetNumberOfIds(points_number)  # make a quad
-    for i in range(0, points_number):
-        polygon.GetPointIds().SetId(i, i)
-
-    # Add the polygon to a list of polygons
-    polygons = vtk.vtkCellArray()
-    polygons.InsertNextCell(polygon)
-
-    # Create a PolyData
-    vtk_polydata.SetPoints(points)
-    vtk_polydata.SetPolys(polygons)
-
-    # setup colors (setting the name to "Colors" is nice but not necessary)
-    vtk_colors = vtk.vtkUnsignedCharArray();
-    vtk_colors.SetNumberOfComponents(3);
-    vtk_colors.SetName("Colors");
-    vtk_colors.InsertNextTuple3(surface_color.red, surface_color.green, surface_color.blue);
-
-    vtk_polydata.GetCellData().SetScalars(vtk_colors);
-    vtk_polydata.Modified()
-
-    return vtk_polydata
+    pyglet.app.run()
