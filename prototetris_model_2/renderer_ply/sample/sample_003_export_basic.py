@@ -20,7 +20,7 @@ face = numpy.array([([0, 1, 2], 255, 255, 255),
 
 el = PlyElement.describe(vertex, 'my_vertices')
 
-e2 = PlyElement.describe(vertex, 'my_faces')
+e2 = PlyElement.describe(face, 'my_faces')
 
 
 # el = PlyElement.describe(some_array, 'some_name',
