@@ -1,0 +1,19 @@
+ply
+format ascii 1.0
+element my_vertices 4
+property float x
+property float y
+property float z
+element my_faces 4
+property float x
+property float y
+property float z
+end_header
+0 0 0
+0 1 1
+1 0 1
+1 1 0
+0 0 0
+0 1 1
+1 0 1
+1 1 0

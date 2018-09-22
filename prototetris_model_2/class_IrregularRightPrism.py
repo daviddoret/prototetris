@@ -45,22 +45,51 @@ class IrregularRightPrism(AbstractShape):
     # We will also implement constraints, such as:
     # - polygon segments may not cross each other.
 
-    def get_polygons3d(self):
+    def get_polygon3d_list(self):
         """
         Returns the list of 3d polygons
         that represent the prism surfaces.
         """
         return polygon_to_irregular_right_prism(self.polygon_base, self.height)
 
-    def get_base_polygon3d(self):
+    def get_base_by_position(self):
         return polygon_to_point3d_list(self.polygon_base, z=self.position.z)
 
-    def get_top_polygon3d(self):
+    def get_top_by_position(self):
         return polygon_to_point3d_list(self.polygon_base, z=self.position.z + self.height)
+
+    def get_base_by_index(self):
+        return list(range(0, len(self.polygon_base.vertices)))
+
+    def get_top_by_index(self):
+        return list(range(len(self.polygon_base.vertices), 2 * len(self.polygon_base.vertices)))
+
+    def get_rectangle_by_index(self, rectangle_index):
+        if rectangle_index < len(self.polygon_base.vertices) - 1:
+            return (rectangle_index,
+                    rectangle_index + 1,
+                    rectangle_index + 1 + len(self.polygon_base.vertices),
+                    rectangle_index + len(self.polygon_base.vertices),
+                    rectangle_index)
+        elif rectangle_index == len(self.polygon_base.vertices) - 1:
+            return (rectangle_index,
+                    0,
+                    len(self.polygon_base.vertices),
+                    2 * len(self.polygon_base.vertices) - 1,
+                    rectangle_index)
+
+    def get_polygon_list_by_index(self):
+        polygon_list = list()
+        polygon_list.append(self.get_base_by_index())
+        polygon_list.append(self.get_top_by_index())
+        for rectangle_index in range(0, len(self.polygon_base.vertices)):
+            polygon_list.append(self.get_rectangle_by_index(rectangle_index))
+        return polygon_list
+
 
     def get_point3d_list(self):
         """Returns a list of unique 3d points"""
-        return self.get_base_polygon3d() + self.get_top_polygon3d()
+        return self.get_base_by_position() + self.get_top_by_position()
 
     def get_polygon3d_by_position_list(self):
         """Returns the 3d polygons by point position references,

@@ -20,20 +20,21 @@ def irregular_right_prism_to_polydata(prism):
     points_number = 0
     for p in prism.get_point3d_list():
         points_number = points_number + 1
-        # x = float(p.x)
-        # y = float(p.y)
-        # z = float(base_p.z)
         points.InsertNextPoint(p.x, p.y, p.z)
-
-    # Create the polygon
-    polygon = vtk.vtkPolygon()
-    polygon.GetPointIds().SetNumberOfIds(points_number)  # make a quad
-    for i in range(0, points_number):
-        polygon.GetPointIds().SetId(i, i)
 
     # Add the polygon to a list of polygons
     polygons = vtk.vtkCellArray()
-    polygons.InsertNextCell(polygon)
+
+    # Create the polygon
+    for my_polygon in prism.get_polygon_list_by_index():
+        print(my_polygon)
+        polygon = vtk.vtkPolygon()
+        polygon.GetPointIds().SetNumberOfIds(len(prism.get_point3d_list()))
+        polygon.GetPoints().DeepCopy(points)
+        for my_point in my_polygon:
+            print(my_point)
+            polygon.GetPointIds().SetId(my_point, my_point)
+        polygons.InsertNextCell(polygon)
 
     # Create a PolyData
     vtk_polydata.SetPoints(points)
