@@ -3,7 +3,7 @@ from prototetris_model_2.class_IrregularRightPrism import IrregularRightPrism
 from colorutils import *
 from sympy import *
 
-"""Building class
+"""Building class.
 """
 
 
