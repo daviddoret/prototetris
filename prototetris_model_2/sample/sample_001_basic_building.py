@@ -15,11 +15,11 @@ f2 = Floor("2nd floor", position=Point3D(0, 0, 60))
 f2.polygon_base = Polygon((30, 30), (70, 30), (70, 70), (30, 70), (30, 30))
 
 p = []
-p.append(irregular_right_prism_to_vtk_polydata(g))
-p.append(irregular_right_prism_to_vtk_polydata(b))
-p.append(irregular_right_prism_to_vtk_polydata(fb))
-p.append(irregular_right_prism_to_vtk_polydata(f1))
-p.append(irregular_right_prism_to_vtk_polydata(f2))
-p_conso = vtk_combine_polydata(p)
+p.append(irregular_right_prism_to_polydata(g))
+p.append(irregular_right_prism_to_polydata(b))
+p.append(irregular_right_prism_to_polydata(fb))
+p.append(irregular_right_prism_to_polydata(f1))
+p.append(irregular_right_prism_to_polydata(f2))
+p_conso = combine_polydata(p)
 
-vtk_render_cleanpolydata(p_conso)
+render_cleanpolydata(p_conso)
