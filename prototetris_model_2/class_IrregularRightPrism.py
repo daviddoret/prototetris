@@ -1,5 +1,6 @@
 from prototetris_model_2.class_AbstractShape import AbstractShape
 from .fun_polygon_to_irregular_right_prism import polygon_to_irregular_right_prism
+from .fun_polygon_to_point3d_list import polygon_to_point3d_list
 from sympy import *
 from colorutils import *
 
@@ -51,5 +52,38 @@ class IrregularRightPrism(AbstractShape):
         """
         return polygon_to_irregular_right_prism(self.polygon_base, self.height)
 
+    def get_base_polygon3d(self):
+        return polygon_to_point3d_list(self.polygon_base, z=self.position.z)
 
+    def get_top_polygon3d(self):
+        return polygon_to_point3d_list(self.polygon_base, z=self.position.z + self.height)
+
+    def get_point3d_list(self):
+        """Returns a list of unique 3d points"""
+        return self.get_base_polygon3d() + self.get_top_polygon3d()
+
+    def get_polygon3d_by_position_list(self):
+        """Returns the 3d polygons by point position references,
+        this is the format required by vtk."""
+
+        # Add the base
+        polygons_3d.append(list(range(0, len(self.polygon_base))))
+        # Add the top
+        polygons_3d.append(list(range(0, len(self.polygon_base))))
+        # Add the side rectangles
+        for i in range(len(polygon2d.vertices)):
+            vertex_a = polygon2d.vertices[i]
+            vertex_b = None
+            if i == len(polygon2d.vertices) - 1:
+                # The last rectangle links back the last vertex with the first vertex.
+                vertex_b = polygon2d.vertices[0]
+            else:
+                vertex_b = polygon2d.vertices[i + 1]
+            rectangle3d = list()
+            rectangle3d.append(Point3D(vertex_a.x, vertex_a.y, z_base))
+            rectangle3d.append(Point3D(vertex_a.x, vertex_a.y, z_zop))
+            rectangle3d.append(Point3D(vertex_b.x, vertex_b.y, z_zop))
+            rectangle3d.append(Point3D(vertex_b.x, vertex_b.y, z_base))
+            rectangle3d.append(Point3D(vertex_a.x, vertex_a.y, z_base))
+            polygons_3d.append(rectangle3d)
 
