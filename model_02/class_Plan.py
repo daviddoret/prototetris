@@ -16,11 +16,9 @@ class Plan(IrregularRightPrism):
             label="Plan",
             description=None,
             circumscribed_shape=None,
-            position=Point3D(0, 0, 0),
+            position=None,
             polygon_base=Polygon((0, 0), (100, 0), (100, 100), (0, 100), (0, 0)),
-            height=10,
-            *args,
-            **kwargs):
+            height=10):
         IrregularRightPrism.__init__(
             self,
             label=label,
@@ -29,9 +27,7 @@ class Plan(IrregularRightPrism):
             position=position,
             surface_color=colorutils.Color((80, 150, 80)),
             polygon_base=polygon_base,
-            height=height,
-            *args,
-            **kwargs)
+            height=height)
 
     @property
     def building_list(self):

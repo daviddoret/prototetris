@@ -14,11 +14,9 @@ class Floor(IrregularRightPrism):
             label="Building",
             description=None,
             circumscribed_shape=None,
-            position=Point3D(0, 0, 0),
+            position=None,
             polygon_base=Polygon((0, 0), (49, 0), (49, 49), (0, 59), (0, 0)),
-            height=5,
-            *args,
-            **kwargs):
+            height=5):
         IrregularRightPrism.__init__(
             self,
             label=label,
@@ -27,9 +25,7 @@ class Floor(IrregularRightPrism):
             position=position,
             surface_color=colorutils.Color((80, 80, 150)),
             polygon_base=polygon_base,
-            height=height,
-            *args,
-            **kwargs)
+            height=height)
 
     @property
     def flat_list(self):

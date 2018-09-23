@@ -14,11 +14,10 @@ class Building(IrregularRightPrism):
             label="Building",
             description=None,
             circumscribed_shape=None,
-            position=Point3D(0, 0, 0),
+            position=None,
             polygon_base=Polygon((0, 0), (50, 0), (50, 50), (0, 50), (0, 0)),
-            height=100,
-            *args,
-            **kwargs):
+            height=100):
+        print("Building: position parameter: {}".format(position))
         IrregularRightPrism.__init__(
             self,
             label=label,
@@ -27,9 +26,7 @@ class Building(IrregularRightPrism):
             position=position,
             surface_color=colorutils.Color((100, 100, 100)),
             polygon_base=polygon_base,
-            height=height,
-            *args,
-            **kwargs)
+            height=height)
 
     @property
     def floor_list(self):

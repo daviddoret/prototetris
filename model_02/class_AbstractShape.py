@@ -20,13 +20,17 @@ class AbstractShape(object):
             description=None,
             circumscribed_shape=None,
             inscribed_shape_list=[],
-            position=Point3D(0, 0, 0),
+            position=None,
             surface_color=Color((200, 200, 200)),
             *args,
             **kwargs):
 
         self.label = label
         self.description = description
+
+        if position is None:
+            print("AbstractShape.position --> default")
+            position = Point3D(0, 0, 0)
 
         self.circumscribed_shape = None
         if circumscribed_shape is not None:
@@ -38,6 +42,7 @@ class AbstractShape(object):
                 self.append_shape(inscribed_shape)
 
         self.position = position
+        print("AbstractShape.position:{}".format(self.position))
         self.surface_color = surface_color
 
     def __repr__(self):
@@ -53,7 +58,8 @@ class AbstractShape(object):
         to guarantee proper referential integrity between parents and children.
         """
         shape.circumscribed_shape = self
-        shape.position = position
+        if position is not None:
+            shape.position = position
         self.inscribed_shape_list.append(shape)
 
     def get_flattened_shape_list(self):
@@ -80,10 +86,10 @@ class AbstractShape(object):
         point3d_list = list()
         polygon_by_index_list = list()
 
-        for prism in flattened_shape_list:
+        for shape in flattened_shape_list:
             point_index = len(point3d_list)
-            prism_point_list = prism.get_point3d_list()
-            prism_polygon_list = prism.get_polygon_list_by_index(point_index)
+            prism_point_list = shape.get_point3d_list(relative_to_shape=self)
+            prism_polygon_list = shape.get_polygon_list_by_index(point_index)
             point3d_list = point3d_list + prism_point_list
             polygon_by_index_list = polygon_by_index_list + prism_polygon_list
 

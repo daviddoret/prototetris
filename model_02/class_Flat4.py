@@ -7,9 +7,7 @@ class Flat2(Flat):
             self,
             label=None,
             circumscribed_shape=None,
-            position=Point3D(0, 0, 0),
-            *args,
-            **kwargs):
+            position=None):
 
         Flat.__init__(
             self,
@@ -18,6 +16,4 @@ class Flat2(Flat):
             circumscribed_shape=circumscribed_shape,
             position=position,
             polygon_base=Polygon((0, 0), (12500, 0), (12500, 600), (0, 600), (0, 0)),
-            height=300,  # TODO: WIll be linked to the parent floor's height
-            *args,
-            **kwargs)
+            height=300)

@@ -19,7 +19,7 @@ class IrregularRightPrism(AbstractShape):
             label="Irregular Right Prism",
             description=None,
             circumscribed_shape=None,
-            position=Point3D(0, 0, 0),
+            position=None,
             surface_color=Color((200, 200, 200)),
             polygon_base=Polygon((0, 0), (5, 0), (5, 5), (0, 5), (0, 0)),
             height=3,
@@ -102,9 +102,32 @@ class IrregularRightPrism(AbstractShape):
             polygon_list.append(self.get_rectangle_by_index(rectangle_index, point_index_start))
         return polygon_list
 
-    def get_point3d_list(self):
-        """Returns the complete list of 3d points that compose this prism"""
-        return self.get_base_point3d_list() + self.get_top_point3d_list()
+    def get_point3d_list(self, relative_to_shape=None):
+        """Returns the complete list of 3d points that compose this prism
+        relative_to_shape: MUST BE IN THE PARENT HIERARCHY OF CIRCUMSCRIBED SHAPES"""
+        relative_position = Point3D(0, 0, 0)
+        if relative_to_shape is not None:
+            # Add the relative positions of all intermediary shapes
+            current_shape = self
+            do_loop = True
+            while do_loop:
+                circumscribed_shape = current_shape.circumscribed_shape
+                if circumscribed_shape is not None:
+                    print(circumscribed_shape.label)
+                    relative_position = relative_position + circumscribed_shape.position
+                    print("circumscribed_shape.position:{}".format(circumscribed_shape.position))
+                    print("Correction: {}".format(relative_position))
+                    if circumscribed_shape == relative_to_shape:
+                        break
+                else:
+                    break
+                current_shape = circumscribed_shape
+        point3d_list = self.get_base_point3d_list() + self.get_top_point3d_list()
+        point3d_list_relative_to_shape = list()
+        for p in point3d_list:
+            p_relative_to_shape = p + relative_position
+            point3d_list_relative_to_shape.append(p_relative_to_shape)
+        return point3d_list_relative_to_shape
 
     def get_polygon3d_by_position_list(self):
         """Returns the 3d polygons by point position references,
