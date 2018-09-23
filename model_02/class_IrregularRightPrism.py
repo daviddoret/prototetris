@@ -52,10 +52,12 @@ class IrregularRightPrism(AbstractShape):
         """
         return polygon_to_irregular_right_prism(self.polygon_base, self.height)
 
-    def get_base_by_position(self):
+    def get_base_point3d_list(self):
+        """Returns the list of 3d points that compose the base of the prism"""
         return polygon_to_point3d_list(self.polygon_base, z=self.position.z)
 
-    def get_top_by_position(self):
+    def get_top_point3d_list(self):
+        """Returns the list of 3d points that compose the top of the prism"""
         return polygon_to_point3d_list(self.polygon_base, z=self.position.z + self.height)
 
     def get_base_by_index(self, point_index_start):
@@ -77,7 +79,6 @@ class IrregularRightPrism(AbstractShape):
             else:
                 dynamic_tuple = dynamic_tuple + (point_index,)
         return dynamic_tuple
-        #return list(i + point_index_start for i in range(len(self.polygon_base.vertices), 2 * len(self.polygon_base.vertices)))
 
     def get_rectangle_by_index(self, rectangle_index, point_index_start):
         if rectangle_index < len(self.polygon_base.vertices) - 1:
@@ -101,10 +102,9 @@ class IrregularRightPrism(AbstractShape):
             polygon_list.append(self.get_rectangle_by_index(rectangle_index, point_index_start))
         return polygon_list
 
-
     def get_point3d_list(self):
-        """Returns a list of unique 3d points"""
-        return self.get_base_by_position() + self.get_top_by_position()
+        """Returns the complete list of 3d points that compose this prism"""
+        return self.get_base_point3d_list() + self.get_top_point3d_list()
 
     def get_polygon3d_by_position_list(self):
         """Returns the 3d polygons by point position references,

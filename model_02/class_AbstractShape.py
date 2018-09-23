@@ -27,8 +27,16 @@ class AbstractShape(object):
 
         self.label = label
         self.description = description
-        self.circumscribed_shape = circumscribed_shape
-        self.inscribed_shape_list = inscribed_shape_list
+
+        self.circumscribed_shape = None
+        if circumscribed_shape is not None:
+            circumscribed_shape.append_shape(self)
+
+        self.inscribed_shape_list = list()
+        if inscribed_shape_list is not None:
+            for inscribed_shape in inscribed_shape_list:
+                self.append_shape(inscribed_shape)
+
         self.position = position
         self.surface_color = surface_color
 
@@ -44,6 +52,43 @@ class AbstractShape(object):
         """It is mandatory to use this method to append shapes on parent shapes,
         to guarantee proper referential integrity between parents and children.
         """
-        shape.container_shape = self
+        shape.circumscribed_shape = self
         shape.position = position
         self.inscribed_shape_list.append(shape)
+
+    def get_flattened_shape_list(self):
+        """Returns a list containing this shape
+        + all its inscribed shapes
+        + all their inscribed shapes
+        + ... until there are no more shapes left."""
+        flattened_shape_list = list()
+        flattened_shape_list.append(self)
+        for inscribed_shape in self.inscribed_shape_list:
+            flattened_shape_list = flattened_shape_list + inscribed_shape.get_flattened_shape_list()
+        return flattened_shape_list
+
+    def get_flattened_point3d_list_with_polygon_by_index_list(self):
+        """Returns a dictionary with 2 components:
+        - point3d_list: an ordered list of vertices (Point3D) with standard index from 0 to n
+        - polygon_by_index_list: a list of polygons composed a list of n tuples whose value correspond to the point3d index above
+        Assumption: the .get_point3d_list() method must be implemented by all children classes.
+        This "flattened" with polygons "by index" data structure may be useful
+        to simplify exportation of data in certain 3d formats, such as PLY."""
+
+        flattened_shape_list = self.get_flattened_shape_list()
+
+        point3d_list = list()
+        polygon_by_index_list = list()
+
+        for prism in flattened_shape_list:
+            point_index = len(point3d_list)
+            prism_point_list = prism.get_point3d_list()
+            prism_polygon_list = prism.get_polygon_list_by_index(point_index)
+            point3d_list = point3d_list + prism_point_list
+            polygon_by_index_list = polygon_by_index_list + prism_polygon_list
+
+        output_structure = dict(
+            point3d_list=point3d_list,
+            polygon_by_index_list=polygon_by_index_list)
+
+        return output_structure

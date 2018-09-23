@@ -1,16 +1,9 @@
-from plyfile import *
-import numpy
-from colorutils import *
-
-from model_02.renderer_ply.fun_point_list_to_ply_vertices import point_list_to_ply_vertices
-from model_02.renderer_ply.fun_ply_vertices_list_to_ply_vertices_element import ply_vertices_list_to_ply_vertices_element
-from model_02.renderer_ply.fun_ply_face_list_to_ply_face_element import ply_face_list_to_ply_face_element
-from model_02.renderer_ply.fun_polygon_list_to_ply_faces import polygon_list_to_ply_faces
-from model_02 import *
 
 
 def custom_ply_data(prism_list):
     """
+    Takes a list of prisms and merge them together into a PLY file.
+
     References:
      - https://github.com/dranjan/python-plyfile
     """
