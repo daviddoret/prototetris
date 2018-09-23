@@ -1,0 +1,30 @@
+ply
+format ascii 1.0
+element vertex 16
+property float x
+property float y
+property float z
+property uchar red
+property uchar green
+property uchar blue
+element face 2
+property list uchar int vertex_indices
+end_header
+0 0 0 150 80 80
+10 0 0 150 80 80
+10 10 0 150 80 80
+0 10 0 150 80 80
+0 0 4 150 80 80
+10 0 4 150 80 80
+10 10 4 150 80 80
+0 10 4 150 80 80
+0 0 0 150 80 80
+10 0 0 150 80 80
+10 10 0 150 80 80
+0 10 0 150 80 80
+0 0 4 150 80 80
+10 0 4 150 80 80
+10 10 4 150 80 80
+0 10 4 150 80 80
+5 0 1 2 3 0
+5 4 5 6 7 4

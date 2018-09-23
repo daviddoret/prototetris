@@ -58,32 +58,47 @@ class IrregularRightPrism(AbstractShape):
     def get_top_by_position(self):
         return polygon_to_point3d_list(self.polygon_base, z=self.position.z + self.height)
 
-    def get_base_by_index(self):
-        return list(range(0, len(self.polygon_base.vertices)))
+    def get_base_by_index(self, point_index_start):
+        dynamic_tuple = None
+        for i in range(0, len(self.polygon_base.vertices)):
+            point_index = i + point_index_start
+            if dynamic_tuple is None:
+                dynamic_tuple = (point_index,)
+            else:
+                dynamic_tuple = dynamic_tuple + (point_index,)
+        return dynamic_tuple
 
-    def get_top_by_index(self):
-        return list(range(len(self.polygon_base.vertices), 2 * len(self.polygon_base.vertices)))
+    def get_top_by_index(self, point_index_start):
+        dynamic_tuple = None
+        for i in range(len(self.polygon_base.vertices), 2 * len(self.polygon_base.vertices)):
+            point_index = i + point_index_start
+            if dynamic_tuple is None:
+                dynamic_tuple = (point_index,)
+            else:
+                dynamic_tuple = dynamic_tuple + (point_index,)
+        return dynamic_tuple
+        #return list(i + point_index_start for i in range(len(self.polygon_base.vertices), 2 * len(self.polygon_base.vertices)))
 
-    def get_rectangle_by_index(self, rectangle_index):
+    def get_rectangle_by_index(self, rectangle_index, point_index_start):
         if rectangle_index < len(self.polygon_base.vertices) - 1:
-            return (rectangle_index,
-                    rectangle_index + 1,
-                    rectangle_index + 1 + len(self.polygon_base.vertices),
-                    rectangle_index + len(self.polygon_base.vertices),
-                    rectangle_index)
+            return (point_index_start + rectangle_index,
+                    point_index_start + rectangle_index + 1,
+                    point_index_start + rectangle_index + 1 + len(self.polygon_base.vertices),
+                    point_index_start + rectangle_index + len(self.polygon_base.vertices),
+                    point_index_start + rectangle_index)
         elif rectangle_index == len(self.polygon_base.vertices) - 1:
-            return (rectangle_index,
-                    0,
-                    len(self.polygon_base.vertices),
-                    2 * len(self.polygon_base.vertices) - 1,
-                    rectangle_index)
+            return (point_index_start + rectangle_index,
+                    point_index_start + 0,
+                    point_index_start + len(self.polygon_base.vertices),
+                    point_index_start + 2 * len(self.polygon_base.vertices) - 1,
+                    point_index_start + rectangle_index)
 
-    def get_polygon_list_by_index(self):
+    def get_polygon_list_by_index(self, point_index_start):
         polygon_list = list()
-        polygon_list.append(self.get_base_by_index())
-        polygon_list.append(self.get_top_by_index())
+        polygon_list.append(self.get_base_by_index(point_index_start))
+        polygon_list.append(self.get_top_by_index(point_index_start))
         for rectangle_index in range(0, len(self.polygon_base.vertices)):
-            polygon_list.append(self.get_rectangle_by_index(rectangle_index))
+            polygon_list.append(self.get_rectangle_by_index(rectangle_index, point_index_start))
         return polygon_list
 
 
