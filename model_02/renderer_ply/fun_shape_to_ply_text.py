@@ -1,7 +1,7 @@
 import model_02
 
 
-def shape_to_ply(shape):
+def shape_to_ply_text(shape):
     """
     Takes a list of prisms and merge them together into a PLY file.
     References:
@@ -36,9 +36,6 @@ property uchar green
 property uchar blue
 element face {}
 property list uchar int vertex_indices
-property uchar red
-property uchar green
-property uchar blue
 end_header""".format(len(data_structure["point3d_list"]), len(data_structure["polygon_by_index_list"]))
 
     return ply_header + ply_point_text + ply_polygon_text
