@@ -1,5 +1,6 @@
 from sympy import *
 from model_02 import *
+from model_02.renderer_ply.fun_shape_to_ply import *
 
 my_plan = Plan("My land")
 my_plan.polygon_base = Polygon((0, 0), (50, -10), (100, 00), (110, 50), (100, 100), (50, 110), (0, 100), (-10, 50), (0, 0))
@@ -22,4 +23,4 @@ my_building.append_shape(floor_2)
 
 #my_plan.get_flattened_shape_list()
 
-print(my_plan.get_flattened_point3d_list_with_polygon_by_index_list())
+print(shape_to_ply(my_plan))

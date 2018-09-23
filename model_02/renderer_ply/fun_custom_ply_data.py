@@ -45,9 +45,6 @@ property uchar green
 property uchar blue
 element face {}
 property list uchar int vertex_indices
-property uchar red
-property uchar green
-property uchar blue
 end_header""".format(len(point_list), len(polygon_list))
 
     return ply_header + ply_point_text + ply_polygon_text
